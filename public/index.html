@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>哎呦，來一杯～愛玉預約</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e8eedc;--surface:#f6f9ee;--ink:#222c1a;--muted:#5d6b50;--line:#c5d0b4;
+  --amber:#b8741a;--amber-soft:#f1d9a6;--leaf:#34502a;--on-leaf:#f6f9ee;--danger:#9c3a2a;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#161d12;--surface:#212b1b;--ink:#e9efdc;--muted:#a3b293;--line:#394a30;
+  --amber:#e0a247;--amber-soft:#4a3817;--leaf:#a6c98a;--on-leaf:#161d12;--danger:#e08a78;}}
+:root[data-theme="dark"]{--bg:#161d12;--surface:#212b1b;--ink:#e9efdc;--muted:#a3b293;--line:#394a30;
+  --amber:#e0a247;--amber-soft:#4a3817;--leaf:#a6c98a;--on-leaf:#161d12;--danger:#e08a78;}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Noto Sans TC",system-ui,sans-serif}
+main{max-width:640px;margin:0 auto;padding:20px 16px 56px}
+h1,h2{font-family:"Noto Serif TC",serif;margin:0}
+h1{font-size:2.1rem;font-weight:900;letter-spacing:.04em}
+h2{font-size:1.15rem;margin-bottom:10px}
+.hero{padding:18px 0 8px}
+.hero p{margin:6px 0 0;color:var(--muted)}
+.jelly{height:10px;border-radius:6px;margin-top:14px;background:linear-gradient(90deg,var(--amber-soft),var(--amber),var(--amber-soft))}
+section{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:16px}
+.item{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.item:first-of-type{border-top:0}
+.item .info{flex:1}
+.item b{display:block}
+.item small{color:var(--muted)}
+.price{font-weight:700;color:var(--amber);min-width:3.5em;text-align:right}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:1.2rem;cursor:pointer}
+.qty span{min-width:1.6em;text-align:center;font-weight:700}
+label{display:block;font-weight:500;margin:12px 0 4px}
+input,textarea,select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:var(--bg);color:var(--ink);font:inherit;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--leaf);color:var(--on-leaf);border-color:var(--leaf)}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.total{display:flex;justify-content:space-between;align-items:center;font-size:1.1rem;margin-top:14px;font-weight:700}
+.btn{width:100%;margin-top:14px;padding:14px;border:0;border-radius:12px;background:var(--leaf);color:var(--on-leaf);font:700 1rem "Noto Sans TC",sans-serif;cursor:pointer}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.err{color:var(--danger);min-height:1.4em;margin:8px 0 0;font-size:.92rem}
+.note{font-size:.88rem;color:var(--muted);margin-top:8px}
+.ok{text-align:center;padding:24px 8px}
+.ok .code{font:900 2rem "Noto Serif TC",serif;color:var(--amber);letter-spacing:.1em}
+.tabs{display:flex;gap:8px;margin-top:14px}
+.tabs .chip{flex:1;text-align:center}
+.order{border-top:1px solid var(--line);padding:12px 0}
+.order:first-of-type{border-top:0}
+.order .row{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.tag{padding:2px 10px;border-radius:999px;background:var(--amber-soft);font-size:.82rem}
+.tag.done{background:var(--leaf);color:var(--on-leaf)}
+.tag.cancel{background:transparent;border:1px solid var(--danger);color:var(--danger)}
+.acts{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.acts button{padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;cursor:pointer}
+.sum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.sum div{background:var(--bg);border-radius:10px;padding:8px;text-align:center}
+.sum b{display:block;font:900 1.4rem "Noto Serif TC",serif;color:var(--amber)}
+.cal-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.cal-head select{width:auto;flex:1;text-align:center;font-weight:700}
+.cal-nav{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:1.3rem;cursor:pointer}
+.cal-nav:disabled{opacity:.35;cursor:not-allowed}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.cal-wd{font-size:.85rem;color:var(--muted);padding:4px 0}
+.cal-d{min-height:42px;border:1px solid transparent;border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;cursor:pointer}
+.cal-d:disabled{opacity:.3;cursor:not-allowed;background:transparent}
+.cal-d[aria-pressed="true"]{background:var(--leaf);color:var(--on-leaf)}
+.cal-d[data-today="1"]{border-color:var(--amber);font-weight:700}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <h1>哎呦，來一杯～</h1>
+    <p>愛玉預約｜現洗的手作愛玉，先預約，讓你想吃就吃。</p>
+    <p>營業時間：每週六、日 10:00～17:00，遇雨天休息<br>LINE：tony50612</p>
+    <div class="jelly" aria-hidden="true"></div>
+  </header>
+
+  <nav class="tabs" id="tabs" role="tablist">
+    <button class="chip" role="tab" id="t-book" aria-pressed="true">我要預約</button>
+    <button class="chip hidden" role="tab" id="t-admin" aria-pressed="false">訂單管理</button>
+  </nav>
+
+  <div id="view-book">
+    <form id="f" novalidate onsubmit="return false">
+    <section>
+      <h2>選擇品項</h2>
+      <div id="menu"></div>
+      <p class="note">備註：3 杯組請以三杯為單位下單，奇數杯請以單杯下單。</p>
+    </section>
+    <section>
+      <h2>取貨時間</h2>
+      <div id="cal" aria-label="取貨日期月曆"></div>
+      <label>時段</label>
+      <div class="chips" id="slots" role="group" aria-label="取貨時段"></div>
+    </section>
+    <section>
+      <h2>聯絡資料</h2>
+      <label for="name">姓名</label>
+      <input id="name" autocomplete="name" maxlength="20">
+      <label for="phone">手機號碼</label>
+      <input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="0912345678" maxlength="10">
+      <label for="memo">備註（選填）</label>
+      <textarea id="memo" rows="2" maxlength="100" placeholder="例如：少糖、檸檬多一點"></textarea>
+      <div class="total"><span>合計</span><span id="total">NT$ 0</span></div>
+      <p class="err" id="err" role="alert"></p>
+      <button class="btn" id="submit" type="button">送出預約</button>
+      <p class="note">取貨時付款。預約送出後，店家會確認訂單。</p>
+    </section>
+    </form>
+  </div>
+
+  <section id="view-ok" class="hidden ok">
+    <h2>預約已送出</h2>
+    <div class="code" id="code"></div>
+    <p id="okmsg"></p>
+    <button class="btn ghost" id="again" type="button">再預約一筆</button>
+  </section>
+
+  <section id="view-admin" class="hidden">
+    <h2>訂單管理</h2>
+    <div id="login"><label for="pw">店家密碼</label><input id="pw" type="password" autocomplete="current-password"><button class="btn" id="loginBtn" type="button">登入</button><p class="err" id="lerr" role="alert"></p></div>
+    <div id="adminBody" class="hidden">
+    <label for="fdate">取貨日期</label>
+    <input type="date" id="fdate">
+    <div class="sum" style="margin-top:12px">
+      <div><b id="s-n">0</b>筆訂單</div>
+      <div><b id="s-q">0</b>份商品</div>
+      <div><b id="s-m">0</b>預估營收</div>
+    </div>
+    <div id="orders"></div></div>
+  </section>
+
+  <p class="note" id="mode"></p>
+</main>
+
+<script>
+/* ===== 店家設定：品項、價格、營業時段 ===== */
+var MENU=[
+  {id:"lemon",name:"原味招牌檸檬愛玉",desc:"清爽彈嫩",price:40},
+  {id:"b3",name:"原味招牌檸檬愛玉 3 杯",desc:"3 杯優惠組，共 NT$ 100",price:100,cups:3},
+  {id:"s1",name:"正常甜",desc:"",price:0,opt:true},
+  {id:"s2",name:"半糖",desc:"",price:0,opt:true},
+  {id:"s3",name:"微糖",desc:"",price:0,opt:true},
+  {id:"ice",name:"冰塊（少冰）",desc:"",price:0,opt:true}
+];
+var SLOTS=["10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00"];
+var DAYS_AHEAD=7, MAX_QTY=20;
+
+/* ===== 狀態 ===== */
+var cart={}, pickDate=null, pickSlot=null, db=null, isOwner=false, orders=[], localOrders=[];
+var STATUS={new:"待確認",ok:"已確認",done:"已取貨",cancel:"已取消"};
+var $=function(i){return document.getElementById(i)};
+function pad(n){return n<10?"0"+n:""+n}
+function ymd(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())}
+var WD=["日","一","二","三","四","五","六"];
+function label(s){var p=s.split("-");var d=new Date(+p[0],+p[1]-1,+p[2]);return (+p[1])+"/"+(+p[2])+"（"+WD[d.getDay()]+"）"}
+function money(n){return "NT$ "+n}
+function total(){return MENU.reduce(function(s,m){return s+(cart[m.id]||0)*m.price},0)}
+function count(){return MENU.reduce(function(s,m){return s+(m.opt?0:(cart[m.id]||0)*(m.cups||1))},0)}
+
+/* ===== 預約畫面 ===== */
+function renderMenu(){
+  var h="";
+  MENU.forEach(function(m,i){
+    if(m.opt&&!(MENU[i-1]&&MENU[i-1].opt))h+='<p class="note" style="margin:14px 0 0">甜度與冰塊（數量請對應杯數）</p>';
+    h+='<div class="item"><div class="info"><b>'+m.name+'</b><small>'+m.desc+'</small></div>'+
+    (m.price?'<span class="price">'+money(m.price)+'</span>':'')+
+    '<div class="qty"><button type="button" data-id="'+m.id+'" data-d="-1" aria-label="減少 '+m.name+'">−</button>'+
+    '<span id="q-'+m.id+'">'+(cart[m.id]||0)+'</span>'+
+    '<button type="button" data-id="'+m.id+'" data-d="1" aria-label="增加 '+m.name+'">+</button></div></div>';
+  });
+  $("menu").innerHTML=h;
+}
+$("menu").addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;
+  var id=b.dataset.id,v=(cart[id]||0)+(+b.dataset.d);
+  cart[id]=Math.max(0,Math.min(MAX_QTY,v));
+  $("q-"+id).textContent=cart[id];$("total").textContent=money(total());
+});
+function dateList(){
+  var a=[],t=new Date();
+  for(var i=0;i<DAYS_AHEAD;i++){var d=new Date(t.getFullYear(),t.getMonth(),t.getDate()+i);a.push(ymd(d))}
+  return a;
+}
+function chips(el,list,cur,fmt,cb,disabledFn){
+  el.innerHTML="";
+  list.forEach(function(v){
+    var b=document.createElement("button");b.type="button";b.className="chip";
+    b.textContent=fmt(v);b.setAttribute("aria-pressed",v===cur);
+    if(disabledFn&&disabledFn(v)){b.disabled=true;b.style.opacity=.4}
+    b.onclick=function(){cb(v)};el.appendChild(b);
+  });
+}
+var calY=new Date().getFullYear(),calM=new Date().getMonth(),MAX_MONTHS=12;
+function renderCal(){
+  var t=new Date(),today=ymd(t),lead=new Date(calY,calM,1).getDay(),dim=new Date(calY,calM+1,0).getDate();
+  var off=(calY-t.getFullYear())*12+calM-t.getMonth();
+  var h='<div class="cal-head"><button type="button" class="cal-nav" data-nav="-1" aria-label="上個月"'+(off<=0?" disabled":"")+'>‹</button><select id="cal-sel" aria-label="選擇月份">';
+  for(var i=0;i<MAX_MONTHS;i++){var d=new Date(t.getFullYear(),t.getMonth()+i,1);h+='<option value="'+i+'"'+(i===off?" selected":"")+'>'+d.getFullYear()+" 年 "+(d.getMonth()+1)+" 月</option>"}
+  h+='</select><button type="button" class="cal-nav" data-nav="1" aria-label="下個月"'+(off>=MAX_MONTHS-1?" disabled":"")+'>›</button></div><div class="cal-grid">';
+  WD.forEach(function(w){h+='<span class="cal-wd">'+w+'</span>'});
+  for(var k=0;k<lead;k++)h+='<span></span>';
+  for(var n=1;n<=dim;n++){var s=calY+"-"+pad(calM+1)+"-"+pad(n);h+='<button type="button" class="cal-d" data-d="'+s+'" aria-pressed="'+(s===pickDate)+'"'+(s<today||[0,6].indexOf(new Date(calY,calM,n).getDay())<0?" disabled":"")+(s===today?' data-today="1"':"")+'>'+n+'</button>'}
+  $("cal").innerHTML=h+'</div><p class="note">已選取貨日：'+(pickDate?label(pickDate):"尚未選擇")+'</p>';
+}
+function goMonth(off){var t=new Date(),d=new Date(t.getFullYear(),t.getMonth()+off,1);calY=d.getFullYear();calM=d.getMonth();renderCal()}
+$("cal").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;
+  if(b.dataset.nav){var t=new Date();goMonth((calY-t.getFullYear())*12+calM-t.getMonth()+(+b.dataset.nav));return}
+  if(b.dataset.d){pickDate=b.dataset.d;if(pickSlot&&slotPast(pickSlot))pickSlot=null;renderPick()}});
+$("cal").addEventListener("change",function(e){if(e.target.id==="cal-sel")goMonth(+e.target.value)});
+function slotPast(s){
+  if(pickDate!==ymd(new Date()))return false;
+  var n=new Date(),h=+s.split(":")[0];return h<=n.getHours();
+}
+function renderPick(){
+  renderCal();
+  chips($("slots"),SLOTS,pickSlot,function(v){return v},function(v){pickSlot=v;renderPick()},slotPast);
+}
+function validate(){
+  if(count()===0)return "請至少選擇一項商品。";
+  var cups=count(),sw=(cart.s1||0)+(cart.s2||0)+(cart.s3||0);
+  if(sw!==cups)return "甜度杯數（"+sw+"）要和商品杯數（"+cups+"）一致。";
+  if((cart.ice||0)>cups)return "少冰杯數不能超過商品杯數。";
+  if(!pickDate||!pickSlot)return "請選擇取貨日期和時段。";
+  if(!$("name").value.trim())return "請填寫姓名。";
+  if(!/^09\d{8}$/.test($("phone").value.trim()))return "手機號碼需為 10 碼，並以 09 開頭。";
+  return "";
+}
+$("submit").onclick=async function(){
+  var e=validate();$("err").textContent=e;if(e)return;
+  $("submit").disabled=true;
+  try{
+    var r=await fetch("/api/book",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:$("name").value.trim(),phone:$("phone").value.trim(),memo:$("memo").value.trim(),date:pickDate,slot:pickSlot,cart:cart})});
+    var j=await r.json();if(!r.ok)throw new Error(j.error||"");
+    $("code").textContent="#"+j.code;
+    $("okmsg").textContent=label(pickDate)+" "+pickSlot+" 取貨，合計 "+money(j.total)+"。請記下取貨編號。";
+    $("view-book").classList.add("hidden");$("tabs").classList.add("hidden");$("view-ok").classList.remove("hidden");
+  }catch(x){$("err").textContent=x.message||"送出失敗，請確認網路後再試一次。"}
+  $("submit").disabled=false;
+};
+$("again").onclick=function(){
+  cart={};pickSlot=null;$("name").value="";$("phone").value="";$("memo").value="";$("err").textContent="";
+  renderMenu();renderPick();$("total").textContent=money(0);
+  $("view-ok").classList.add("hidden");$("view-book").classList.remove("hidden");$("tabs").classList.remove("hidden");
+};
+
+/* ===== 訂單管理 ===== */
+function show(tab){
+  var a=tab==="admin";
+  $("view-book").classList.toggle("hidden",a);$("view-admin").classList.toggle("hidden",!a);
+  $("t-book").setAttribute("aria-pressed",!a);$("t-admin").setAttribute("aria-pressed",a);
+}
+$("t-book").onclick=function(){show("book")};
+$("t-admin").onclick=function(){show("admin")};
+function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML}
+function renderAdmin(){
+  if(!$("fdate").value)$("fdate").value=ymd(new Date());
+  var list=orders.filter(function(o){return o.date===$("fdate").value}).sort(function(a,b){return a.slot<b.slot?-1:a.slot>b.slot?1:a.created-b.created});
+  var live=list.filter(function(o){return o.status!=="cancel"});
+  $("s-n").textContent=live.length;
+  $("s-q").textContent=live.reduce(function(s,o){return s+o.items.reduce(function(t,i){return t+(i.opt?0:i.qty*(i.cups||1))},0)},0);
+  $("s-m").textContent=money(live.reduce(function(s,o){return s+o.total},0));
+  if(!list.length){$("orders").innerHTML='<p class="note">這一天還沒有預約。</p>';return}
+  $("orders").innerHTML=list.map(function(o){
+    var cls=o.status==="done"?"done":o.status==="cancel"?"cancel":"";
+    return '<div class="order"><div class="row"><b>'+esc(o.slot)+'　'+esc(o.name)+'　#'+esc(o.code)+'</b><span class="tag '+cls+'">'+STATUS[o.status]+'</span></div>'+
+    '<div>'+o.items.map(function(i){return esc(i.name)+" ×"+i.qty}).join("、")+'　'+money(o.total)+'</div>'+
+    '<div class="note"><a href="tel:'+esc(o.phone)+'">'+esc(o.phone)+'</a>'+(o.memo?"　備註："+esc(o.memo):"")+'</div>'+
+    '<div class="acts"><button data-s="ok" data-i="'+o.__id+'">確認</button><button data-s="done" data-i="'+o.__id+'">已取貨</button><button data-s="cancel" data-i="'+o.__id+'">取消</button></div></div>';
+  }).join("");
+}
+$("fdate").onchange=loadOrders;
+var pw="";try{pw=sessionStorage.getItem("aiyu-pw")||""}catch(x){}
+function api(path,init){init=init||{};init.headers=Object.assign({"x-admin-key":pw,"Content-Type":"application/json"},init.headers||{});return fetch(path,init)}
+async function loadOrders(){
+  var r=await api("/api/admin/orders?date="+($("fdate").value||ymd(new Date())));
+  if(r.status===401){pw="";try{sessionStorage.removeItem("aiyu-pw")}catch(x){}$("login").classList.remove("hidden");$("adminBody").classList.add("hidden");$("lerr").textContent="密碼錯誤";return}
+  var a=await r.json();orders=a.map(function(o){o.__id=o.id;o.created=Date.parse(o.created_at);return o});
+  $("login").classList.add("hidden");$("adminBody").classList.remove("hidden");renderAdmin();
+}
+$("loginBtn").onclick=function(){pw=$("pw").value;try{sessionStorage.setItem("aiyu-pw",pw)}catch(x){}$("lerr").textContent="";loadOrders()};
+$("orders").addEventListener("click",async function(e){var b=e.target.closest("button[data-s]");if(!b)return;
+  var r=await api("/api/admin/orders",{method:"PATCH",body:JSON.stringify({id:b.dataset.i,status:b.dataset.s})});
+  if(r.ok)loadOrders();else alert("更新失敗，請再試一次。")});
+$("t-admin").addEventListener("click",function(){if(pw)loadOrders()});
+if(location.hash==="#admin")$("t-admin").classList.remove("hidden");
+
+/* ===== 啟動 ===== */
+pickDate=dateList()[0];renderMenu();renderPick();$("total").textContent=money(0);
+try{localOrders=JSON.parse(localStorage.getItem("aiyu-orders")||"[]")}catch(x){localOrders=[]}
+localOrders.forEach(function(o,i){o.__id=o.__id||("l"+i)});
+
+
+</script>
+</body>
+</html>
